@@ -28,8 +28,8 @@ The template contains all bits and pieces of a game - apart from the game itelf.
 - **Links** to facebook, twitter, Instagram and other social media accounts for serving your community
 - Data Privacy is yet to come
 
-In addition, the templates implement a standard storyboard for games. This picture illustrates the storyboard screens:
-!!!PICTURE!!!
+In addition, the templates implement a standard storyboard for games. This picture illustrates the storyboard flow:
+![Storyboard](/images/storyboard.png)
 
 One of the central design criterias for the storyboard were, that the game should be lightweight, simple and easy to use. Short start times are also important as straight processes without being bothered by additional buttons and long click-through paths until the player can even start the game. Therefore the main screen directly contains the game and this is presented straight after starting.
 
