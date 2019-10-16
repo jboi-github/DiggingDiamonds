@@ -12,7 +12,7 @@ Other branches are derived from the `template-master` to create an instance of a
 - `<Game>-development` contains the current development status. There can be more branches, depending on the features and complexity of the game.
 
 The following picture illustrates how code is pulled towards AppStore. Note that the original master branch is never used.
-!!!PICTURE!!!
+![Branches](/images/branches.png)
 
 And this is, how you can use the template: Clone `template-master` and add your game on top of it. The GNU licences explicitely excludes to use it for closed software like Games in the AppStore. When you plan to go publich your game on the AppStore, let me know. It requires simply to be mentioned on your launch screen and I expect some donation to be able to continue with this project.
 
