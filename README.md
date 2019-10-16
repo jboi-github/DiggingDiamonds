@@ -56,8 +56,11 @@ Some remarks and best practice for the screens:
 
 ## Setup the game
 It's a few steps to get to your game. The good thing: You can focus as much as possible on your game and game design.
-1. Clone the `template-master` and create your project on top of it. Run it and see what you already have.
-2. Make sure your XCode contains the capabilities for iCloud, Core Data, GameCenter, Push Notifications, InApp's !!!WHICH ELSE!!!
+1. Clone the `template-master` and create your project (including iCloud and Core Data) on top of it. Run it and see what you already have.
+2. Make sure your XCode contains the capabilities for Game Center, In-App Purchase and iCloud.
+    - In iCloud activate "CloudKit" which includes Push Notifications
+    - Choose your Container or click on "+" to create one. Containers cannot be deleted, so ensure you name them correctly.
+    - !!!WHICH ELSE!!!
 3. The following steps can be done in any order. In fact I revisit and change them and follow an iterative approach.
   - In itunes connect, create the App, add achievements and leaderboards (scores) to GameCenter and receive your AppId
   - Design your game by changing the storyboard and controls to fit your game layout. Also fill the settings screen.

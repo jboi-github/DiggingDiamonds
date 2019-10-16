@@ -16,6 +16,9 @@
 		150C7EC323577C7D005582A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 150C7EC123577C7D005582A6 /* LaunchScreen.storyboard */; };
 		150C7ECE23577C7D005582A6 /* DiggingDiamondsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7ECD23577C7D005582A6 /* DiggingDiamondsTests.swift */; };
 		150C7ED923577C7D005582A6 /* DiggingDiamondsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7ED823577C7D005582A6 /* DiggingDiamondsUITests.swift */; };
+		150C7EE823577D57005582A6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150C7EE723577D57005582A6 /* StoreKit.framework */; };
+		150C7EEA23577D5D005582A6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150C7EE923577D5D005582A6 /* GameKit.framework */; };
+		150C7EED23577E02005582A6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150C7EEC23577E02005582A6 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,10 @@
 		150C7ED423577C7D005582A6 /* DiggingDiamondsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiggingDiamondsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		150C7ED823577C7D005582A6 /* DiggingDiamondsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiggingDiamondsUITests.swift; sourceTree = "<group>"; };
 		150C7EDA23577C7D005582A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		150C7EE723577D57005582A6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		150C7EE923577D5D005582A6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		150C7EEB23577D63005582A6 /* DiggingDiamonds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiggingDiamonds.entitlements; sourceTree = "<group>"; };
+		150C7EEC23577E02005582A6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +65,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				150C7EED23577E02005582A6 /* CloudKit.framework in Frameworks */,
+				150C7EE823577D57005582A6 /* StoreKit.framework in Frameworks */,
+				150C7EEA23577D5D005582A6 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +95,7 @@
 				150C7ECC23577C7D005582A6 /* DiggingDiamondsTests */,
 				150C7ED723577C7D005582A6 /* DiggingDiamondsUITests */,
 				150C7EB123577C7B005582A6 /* Products */,
+				150C7EE623577D57005582A6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +112,7 @@
 		150C7EB223577C7B005582A6 /* DiggingDiamonds */ = {
 			isa = PBXGroup;
 			children = (
+				150C7EEB23577D63005582A6 /* DiggingDiamonds.entitlements */,
 				150C7EB323577C7B005582A6 /* AppDelegate.swift */,
 				150C7EB523577C7B005582A6 /* SceneDelegate.swift */,
 				150C7EBA23577C7B005582A6 /* ContentView.swift */,
@@ -137,6 +149,16 @@
 				150C7EDA23577C7D005582A6 /* Info.plist */,
 			);
 			path = DiggingDiamondsUITests;
+			sourceTree = "<group>";
+		};
+		150C7EE623577D57005582A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				150C7EEC23577E02005582A6 /* CloudKit.framework */,
+				150C7EE923577D5D005582A6 /* GameKit.framework */,
+				150C7EE723577D57005582A6 /* StoreKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -438,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DiggingDiamonds/DiggingDiamonds.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"DiggingDiamonds/Preview Content\"";
 				DEVELOPMENT_TEAM = YW52XX5QKJ;
@@ -458,6 +481,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DiggingDiamonds/DiggingDiamonds.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"DiggingDiamonds/Preview Content\"";
 				DEVELOPMENT_TEAM = YW52XX5QKJ;
