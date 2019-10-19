@@ -10,7 +10,6 @@
 		150C7EB423577C7B005582A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EB323577C7B005582A6 /* AppDelegate.swift */; };
 		150C7EB623577C7B005582A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EB523577C7B005582A6 /* SceneDelegate.swift */; };
 		150C7EB923577C7B005582A6 /* DiggingDiamonds.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EB723577C7B005582A6 /* DiggingDiamonds.xcdatamodeld */; };
-		150C7EBB23577C7B005582A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EBA23577C7B005582A6 /* ContentView.swift */; };
 		150C7EBD23577C7D005582A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 150C7EBC23577C7D005582A6 /* Assets.xcassets */; };
 		150C7EC023577C7D005582A6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 150C7EBF23577C7D005582A6 /* Preview Assets.xcassets */; };
 		150C7EC323577C7D005582A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 150C7EC123577C7D005582A6 /* LaunchScreen.storyboard */; };
@@ -19,6 +18,12 @@
 		150C7EE823577D57005582A6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150C7EE723577D57005582A6 /* StoreKit.framework */; };
 		150C7EEA23577D5D005582A6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150C7EE923577D5D005582A6 /* GameKit.framework */; };
 		150C7EED23577E02005582A6 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 150C7EEC23577E02005582A6 /* CloudKit.framework */; };
+		150C7EF62358D66A005582A6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EF52358D66A005582A6 /* MainView.swift */; };
+		150C7EF82358DEFF005582A6 /* InAppStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EF72358DEFF005582A6 /* InAppStoreView.swift */; };
+		150C7EFA2358DF65005582A6 /* InAppOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EF92358DF65005582A6 /* InAppOfferView.swift */; };
+		150C7EFC2358DF83005582A6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EFB2358DF83005582A6 /* SettingsView.swift */; };
+		150C7F022359C415005582A6 /* ControllerActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7F012359C415005582A6 /* ControllerActions.swift */; };
+		157D0785235B53E600510339 /* CustomGenericViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D0784235B53E600510339 /* CustomGenericViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +48,6 @@
 		150C7EB323577C7B005582A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		150C7EB523577C7B005582A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		150C7EB823577C7B005582A6 /* DiggingDiamonds.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DiggingDiamonds.xcdatamodel; sourceTree = "<group>"; };
-		150C7EBA23577C7B005582A6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		150C7EBC23577C7D005582A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		150C7EBF23577C7D005582A6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		150C7EC223577C7D005582A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,6 +62,12 @@
 		150C7EE923577D5D005582A6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		150C7EEB23577D63005582A6 /* DiggingDiamonds.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiggingDiamonds.entitlements; sourceTree = "<group>"; };
 		150C7EEC23577E02005582A6 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		150C7EF52358D66A005582A6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		150C7EF72358DEFF005582A6 /* InAppStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppStoreView.swift; sourceTree = "<group>"; };
+		150C7EF92358DF65005582A6 /* InAppOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppOfferView.swift; sourceTree = "<group>"; };
+		150C7EFB2358DF83005582A6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		150C7F012359C415005582A6 /* ControllerActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerActions.swift; sourceTree = "<group>"; };
+		157D0784235B53E600510339 /* CustomGenericViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGenericViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,14 +122,12 @@
 		150C7EB223577C7B005582A6 /* DiggingDiamonds */ = {
 			isa = PBXGroup;
 			children = (
+				150C7F002359C364005582A6 /* Controller */,
+				150C7EF42358CA08005582A6 /* Model */,
+				150C7EF32358C9F7005582A6 /* View */,
+				150C7EF22358C9C4005582A6 /* Delegates */,
 				150C7EEB23577D63005582A6 /* DiggingDiamonds.entitlements */,
-				150C7EB323577C7B005582A6 /* AppDelegate.swift */,
-				150C7EB523577C7B005582A6 /* SceneDelegate.swift */,
-				150C7EBA23577C7B005582A6 /* ContentView.swift */,
-				150C7EBC23577C7D005582A6 /* Assets.xcassets */,
-				150C7EC123577C7D005582A6 /* LaunchScreen.storyboard */,
 				150C7EC423577C7D005582A6 /* Info.plist */,
-				150C7EB723577C7B005582A6 /* DiggingDiamonds.xcdatamodeld */,
 				150C7EBE23577C7D005582A6 /* Preview Content */,
 			);
 			path = DiggingDiamonds;
@@ -159,6 +167,53 @@
 				150C7EE723577D57005582A6 /* StoreKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		150C7EF12358C993005582A6 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				150C7EC123577C7D005582A6 /* LaunchScreen.storyboard */,
+				150C7EBC23577C7D005582A6 /* Assets.xcassets */,
+				150C7EF52358D66A005582A6 /* MainView.swift */,
+				150C7EF72358DEFF005582A6 /* InAppStoreView.swift */,
+				150C7EF92358DF65005582A6 /* InAppOfferView.swift */,
+				150C7EFB2358DF83005582A6 /* SettingsView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		150C7EF22358C9C4005582A6 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				150C7EB323577C7B005582A6 /* AppDelegate.swift */,
+				150C7EB523577C7B005582A6 /* SceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		150C7EF32358C9F7005582A6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				150C7EF12358C993005582A6 /* Screens */,
+				157D0784235B53E600510339 /* CustomGenericViews.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		150C7EF42358CA08005582A6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				150C7EB723577C7B005582A6 /* DiggingDiamonds.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		150C7F002359C364005582A6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				150C7F012359C415005582A6 /* ControllerActions.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,10 +347,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157D0785235B53E600510339 /* CustomGenericViews.swift in Sources */,
+				150C7F022359C415005582A6 /* ControllerActions.swift in Sources */,
 				150C7EB423577C7B005582A6 /* AppDelegate.swift in Sources */,
+				150C7EFC2358DF83005582A6 /* SettingsView.swift in Sources */,
+				150C7EF62358D66A005582A6 /* MainView.swift in Sources */,
+				150C7EF82358DEFF005582A6 /* InAppStoreView.swift in Sources */,
 				150C7EB623577C7B005582A6 /* SceneDelegate.swift in Sources */,
-				150C7EBB23577C7B005582A6 /* ContentView.swift in Sources */,
 				150C7EB923577C7B005582A6 /* DiggingDiamonds.xcdatamodeld in Sources */,
+				150C7EFA2358DF65005582A6 /* InAppOfferView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
