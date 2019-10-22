@@ -8,11 +8,15 @@
 
 import SwiftUI
 
-fileprivate func getImageButtonBody(systemName: String) -> some View {
-    return HStack {
-        Spacer()
-        Image(systemName: systemName)
-        Spacer()
+fileprivate struct ImageButtonBody : View {
+    var systemName: String
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            Image(systemName: systemName)
+            Spacer()
+        }
     }
 }
 
@@ -21,7 +25,7 @@ struct ImageButton : View {
     var action: () -> Void
 
     var body: some View {
-        Button(action: action) {getImageButtonBody(systemName: systemName)}
+        Button(action: action) {ImageButtonBody(systemName: systemName)}
     }
 }
 
@@ -31,7 +35,7 @@ struct ImageNavigationLink<Destination : View> : View {
 
     var body: some View {
         NavigationLink(destination: destination) {
-            getImageButtonBody(systemName: systemName)
+            ImageButtonBody(systemName: systemName)
         }
     }
 }

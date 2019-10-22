@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A602" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Achievement" representedClassName=".GTAchievement" syncable="YES" codeGenerationType="class">
+        <attribute name="current" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="highest" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+    </entity>
+    <entity name="Consumable" representedClassName=".GTConsumable" syncable="YES" codeGenerationType="class">
+        <attribute name="bought" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="consumed" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="earned" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+    </entity>
+    <entity name="NonConsumable" representedClassName=".GTNonConsumable" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+        <attribute name="isOpened" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Score" representedClassName="GTScore" syncable="YES" codeGenerationType="class">
+        <attribute name="current" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="highest" attributeType="Integer 64" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="String" defaultValueString=""/>
+    </entity>
+    <elements>
+        <element name="Achievement" positionX="0" positionY="45" width="128" height="88"/>
+        <element name="Consumable" positionX="54" positionY="117" width="128" height="103"/>
+        <element name="NonConsumable" positionX="72" positionY="153" width="128" height="73"/>
+        <element name="Score" positionX="27" positionY="90" width="128" height="88"/>
+    </elements>
 </model>

@@ -23,7 +23,14 @@
 		150C7EFA2358DF65005582A6 /* InAppOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EF92358DF65005582A6 /* InAppOfferView.swift */; };
 		150C7EFC2358DF83005582A6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7EFB2358DF83005582A6 /* SettingsView.swift */; };
 		150C7F022359C415005582A6 /* ControllerActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7F012359C415005582A6 /* ControllerActions.swift */; };
+		152DB45D235E03810086BFE3 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152DB45C235E03810086BFE3 /* Achievement.swift */; };
 		157D0785235B53E600510339 /* CustomGenericViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D0784235B53E600510339 /* CustomGenericViews.swift */; };
+		157D0789235B8AFA00510339 /* GameZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D0788235B8AFA00510339 /* GameZone.swift */; };
+		157D078D235D92C300510339 /* GTDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D078C235D92C300510339 /* GTDataProvider.swift */; };
+		157D0797235DF15200510339 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157D0796235DF15200510339 /* Score.swift */; };
+		159371FB235E07F600A66EC6 /* Consumable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159371FA235E07F600A66EC6 /* Consumable.swift */; };
+		159371FD235E0B0100A66EC6 /* NonConsumable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159371FC235E0B0100A66EC6 /* NonConsumable.swift */; };
+		159371FF235E210C00A66EC6 /* HelperTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159371FE235E210C00A66EC6 /* HelperTools.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +74,14 @@
 		150C7EF92358DF65005582A6 /* InAppOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppOfferView.swift; sourceTree = "<group>"; };
 		150C7EFB2358DF83005582A6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		150C7F012359C415005582A6 /* ControllerActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerActions.swift; sourceTree = "<group>"; };
+		152DB45C235E03810086BFE3 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		157D0784235B53E600510339 /* CustomGenericViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGenericViews.swift; sourceTree = "<group>"; };
+		157D0788235B8AFA00510339 /* GameZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameZone.swift; sourceTree = "<group>"; };
+		157D078C235D92C300510339 /* GTDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTDataProvider.swift; sourceTree = "<group>"; };
+		157D0796235DF15200510339 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		159371FA235E07F600A66EC6 /* Consumable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consumable.swift; sourceTree = "<group>"; };
+		159371FC235E0B0100A66EC6 /* NonConsumable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonConsumable.swift; sourceTree = "<group>"; };
+		159371FE235E210C00A66EC6 /* HelperTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperTools.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +143,7 @@
 				150C7EEB23577D63005582A6 /* DiggingDiamonds.entitlements */,
 				150C7EC423577C7D005582A6 /* Info.plist */,
 				150C7EBE23577C7D005582A6 /* Preview Content */,
+				159371FE235E210C00A66EC6 /* HelperTools.swift */,
 			);
 			path = DiggingDiamonds;
 			sourceTree = "<group>";
@@ -178,6 +193,7 @@
 				150C7EF72358DEFF005582A6 /* InAppStoreView.swift */,
 				150C7EF92358DF65005582A6 /* InAppOfferView.swift */,
 				150C7EFB2358DF83005582A6 /* SettingsView.swift */,
+				157D0788235B8AFA00510339 /* GameZone.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -204,6 +220,11 @@
 			isa = PBXGroup;
 			children = (
 				150C7EB723577C7B005582A6 /* DiggingDiamonds.xcdatamodeld */,
+				157D078C235D92C300510339 /* GTDataProvider.swift */,
+				157D0796235DF15200510339 /* Score.swift */,
+				152DB45C235E03810086BFE3 /* Achievement.swift */,
+				159371FA235E07F600A66EC6 /* Consumable.swift */,
+				159371FC235E0B0100A66EC6 /* NonConsumable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -347,13 +368,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157D078D235D92C300510339 /* GTDataProvider.swift in Sources */,
 				157D0785235B53E600510339 /* CustomGenericViews.swift in Sources */,
+				159371FB235E07F600A66EC6 /* Consumable.swift in Sources */,
 				150C7F022359C415005582A6 /* ControllerActions.swift in Sources */,
 				150C7EB423577C7B005582A6 /* AppDelegate.swift in Sources */,
 				150C7EFC2358DF83005582A6 /* SettingsView.swift in Sources */,
 				150C7EF62358D66A005582A6 /* MainView.swift in Sources */,
+				159371FD235E0B0100A66EC6 /* NonConsumable.swift in Sources */,
+				157D0789235B8AFA00510339 /* GameZone.swift in Sources */,
+				152DB45D235E03810086BFE3 /* Achievement.swift in Sources */,
+				157D0797235DF15200510339 /* Score.swift in Sources */,
 				150C7EF82358DEFF005582A6 /* InAppStoreView.swift in Sources */,
 				150C7EB623577C7B005582A6 /* SceneDelegate.swift in Sources */,
+				159371FF235E210C00A66EC6 /* HelperTools.swift in Sources */,
 				150C7EB923577C7B005582A6 /* DiggingDiamonds.xcdatamodeld in Sources */,
 				150C7EFA2358DF65005582A6 /* InAppOfferView.swift in Sources */,
 			);

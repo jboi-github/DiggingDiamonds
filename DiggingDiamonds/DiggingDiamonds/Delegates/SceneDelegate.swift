@@ -19,12 +19,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        // Get the managed object context from the shared persistent container.
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
-        // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = MainView().environment(\.managedObjectContext, context)
+        // TODO: Explain this in the Readme
+        let contentView = MainView(
+            someScore: GTDataProvider.sharedInstance!.getScore("Some Score"),
+            someAchievement: GTDataProvider.sharedInstance!.getAchievement("Gold Medal"),
+            someNonConsumable: GTDataProvider.sharedInstance!.getNonConsumable("to be or not to be"),
+            someConsumable: GTDataProvider.sharedInstance!.getConsumable("Collect it")
+        )
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -63,9 +65,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        GTDataProvider.sharedInstance!.save() // TODO: Mentioned in Readme
     }
-
-
 }
 
