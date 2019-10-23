@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import GameKit
 
 class Achievement: ObservableObject {
     internal var delegate: GTAchievement {
@@ -58,6 +59,12 @@ class Achievement: ObservableObject {
         delegate.highest = highest
     }
     
+    internal func getGameCenterReporter(id: String) -> GKAchievement {
+        let gkAchievement = GKAchievement(identifier: id)
+        gkAchievement.percentComplete = current
+        return gkAchievement
+    }
+
     internal func merge(prev: GTAchievement) {
         current = Double(delegate.current)
         highest = Double(max(delegate.highest, prev.highest))

@@ -11,29 +11,19 @@ import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
-    var window: UIWindow?
-
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
-        // TODO: Explain this in the Readme
-        let contentView = MainView(
-            someScore: GTDataProvider.sharedInstance!.getScore("Some Score"),
-            someAchievement: GTDataProvider.sharedInstance!.getAchievement("Gold Medal"),
-            someNonConsumable: GTDataProvider.sharedInstance!.getNonConsumable("to be or not to be"),
-            someConsumable: GTDataProvider.sharedInstance!.getConsumable("Collect it")
-        )
-
-        // Use a UIHostingController as window root view controller.
-        if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
-            self.window = window
-            window.makeKeyAndVisible()
+        // TODO: Explain this. (have fun!)
+        GTDataProvider.createSharedInstance(scene, containerName: "DiggingDiamonds") {
+            MainView(
+                someScore: GTDataProvider.sharedInstance!.getScore("Some Score"),
+                someAchievement: GTDataProvider.sharedInstance!.getAchievement("Gold Medal"),
+                someNonConsumable: GTDataProvider.sharedInstance!.getNonConsumable("to be or not to be"),
+                someConsumable: GTDataProvider.sharedInstance!.getConsumable("Collect it")
+            )
         }
     }
 

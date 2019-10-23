@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import GameKit
 
 internal class Score: ObservableObject {
     internal var delegate: GTScore {
@@ -52,6 +53,12 @@ internal class Score: ObservableObject {
         delegate.highest = Int64(highest)
     }
     
+    internal func getGameCenterReporter(id: String) -> GKScore {
+        let gkScore = GKScore(leaderboardIdentifier: id)
+        gkScore.value = Int64(current)
+        return gkScore
+    }
+
     internal func merge(prev: GTScore) {
         current = Int(delegate.current)
         highest = Int(max(delegate.highest, prev.highest))

@@ -16,6 +16,8 @@ struct MainView: View {
     @ObservedObject var someConsumable: Consumable
 
     private struct NavigationArea: View {
+        @ObservedObject var gtGameCenter = GTGameCenter.sharedInstance!
+
         var body: some View {
             VStack {
                 Divider()
@@ -23,8 +25,9 @@ struct MainView: View {
                     ImageNavigationLink(systemName: "cart", destination: InAppStoreView())
                     ImageNavigationLink(systemName: "gear", destination: SettingsView())
                     ImageButton(systemName: "rosette") {
-                        print("Button 1")
+                        self.gtGameCenter.show()
                     }
+                    .disabled(!gtGameCenter.enabled)
                     ImageButton(systemName: "link", action: getUrlAction("http://www.apple.com"))
                 }
                 Divider()
@@ -93,7 +96,7 @@ struct MainView: View {
     }
 
     var body: some View {
-        VStack {
+        return VStack {
             NavigationView {
                 ZStack {
                     GameZone(
@@ -123,7 +126,7 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        GTDataProvider.createSharedInstance(containerName: "DiggingDiamonds")
+        GTDataProvider.createSharedInstanceForPreview(containerName: "DiggingDiamonds")
         return MainView(
             someScore: GTDataProvider.sharedInstance!.getScore("Some Score"),
             someAchievement: GTDataProvider.sharedInstance!.getAchievement("Gold Medal"),

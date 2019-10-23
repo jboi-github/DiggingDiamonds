@@ -8,18 +8,58 @@
 
 import Foundation
 import CoreData
+import SwiftUI
+import GameKit
 
+// MARK: - Central objects to handle
+fileprivate var achievements = [String:Achievement]()
+fileprivate var scores = [String:Score]()
+fileprivate var nonConsumables = [String:NonConsumable]()
+fileprivate var consumables = [String:Consumable]()
+
+// MARK: iCloud and CoreData
 class GTDataProvider {
-    // MARK: - Lifecycle: Get singleton instance for container and save
+    // MARK: Lifecycle: Get singleton instance for container and save
     private(set) static var sharedInstance: GTDataProvider? = nil
     
     /// Get the shared, singleton instance of Data Provider
-    public class func createSharedInstance(containerName: String) {
+    public class func createSharedInstance<Label : View>(_ scene: UIScene, containerName: String, makeContentView: () -> Label) {
+        
+        // Use a UIHostingController as window root view controller.
+        guard let windowScene = scene as? UIWindowScene else {return}
+        let window = UIWindow(windowScene: windowScene)
+        GTGameCenter.createSharedInstance(window: window)
+
+        // Cascade if first time
         if sharedInstance == nil {
             sharedInstance = GTDataProvider(containerName)
         }
-     }
+
+        window.rootViewController = UIHostingController(rootView: makeContentView())
+        window.makeKeyAndVisible()
+    }
     
+    public class func createSharedInstanceForPreview(containerName: String) {
+        GTGameCenter.createSharedInstanceForPreview()
+        if sharedInstance == nil {
+            sharedInstance = GTDataProvider(containerName)
+        }
+    }
+
+    /// Prepare scores to enter new level
+    public func enterLevel() {
+        scores.forEach {
+            (key: String, value: Score) in
+            value.startOver()
+        }
+    }
+
+    /// Make sure GameCenter is reported and data saved
+    public func leaveLevel() {
+        save()
+        GTGameCenter.sharedInstance!.report()
+    }
+
     /// Save context. To be used in SceneDelegate
     public func save() {
         // Call prepare save on all elements
@@ -35,14 +75,12 @@ class GTDataProvider {
         } catch {
             guard check(error: error) else {return}
         }
+        
+        // Save to GameCenter
+        GTGameCenter.sharedInstance!.report()
     }
 
-    // MARK: - Get an entity
-    private var achievements = [String:Achievement]()
-    private var scores = [String:Score]()
-    private var nonConsumables = [String:NonConsumable]()
-    private var consumables = [String:Consumable]()
-    
+    // MARK: Get an entity
     public func getAchievement(_ id: String) -> Achievement {
         achievements.getAndAddIfNotExisting(key: id) {
             (id) -> Achievement in
@@ -71,20 +109,20 @@ class GTDataProvider {
         }
     }
 
-    // MARK: - Internal, initialize and load data. Keep track of changes
+    // MARK: Internal, initialize and load data. Keep track of changes
     private let delegate: NSPersistentCloudKitContainer
     
     private init(_ containerName: String) {
-        // MARK: Create instance
+        // Create instance
         delegate = NSPersistentCloudKitContainer(name: containerName)
         delegate.loadPersistentStores() {
             (storeDescription, error) in
             
-            guard self.check(storeDescription: storeDescription, error: error) else {return}
+            guard check(storeDescription: storeDescription, error: error) else {return}
             self.delegate.viewContext.automaticallyMergesChangesFromParent = true
         }
         
-        // MARK: Fetch data and keep track of changes
+        // Fetch data and keep track of changes
         self.load()
     }
  
@@ -133,27 +171,6 @@ class GTDataProvider {
             guard check(error: error) else {return}
         }
     }
-
-    /// Handle errors.
-    /// Returns true, if check was succesful, false if error occured
-    private func check(storeDescription: NSPersistentStoreDescription? = nil, error: Error?) -> Bool {
-        if let error = error as NSError? {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-             
-            /*
-             Typical reasons for an error here include:
-             * The parent directory does not exist, cannot be created, or disallows writing.
-             * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-             * The device is out of space.
-             * The store could not be migrated to the current model version.
-             Check the error message to determine what the actual problem was.
-             */
-            print("*** Unresolved error \(error), \(error.userInfo)")
-            fatalError("Unresolved error \(error), \(error.userInfo)")
-        }
-        return true
-    }
     
     private let incorporateChanges = IncorporateChanges()
     
@@ -161,6 +178,88 @@ class GTDataProvider {
         func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
             print("*** CHANGES DETECTED. Reloading")
             if let provider = GTDataProvider.sharedInstance {provider.load()}
+        }
+    }
+}
+
+// MARK: - GameCenter
+class GTGameCenter: ObservableObject {
+    // MARK: Lifecycle: Get singleton instance
+    private(set) static var sharedInstance: GTGameCenter? = nil
+    
+    fileprivate class func createSharedInstance(window: UIWindow) {
+        if sharedInstance == nil {
+            GTGameCenter.sharedInstance = GTGameCenter(window: window)
+        }
+     }
+    
+    fileprivate class func createSharedInstanceForPreview() {
+        if sharedInstance == nil {
+            GTGameCenter.sharedInstance = GTGameCenter(window: nil)
+        }
+     }
+
+    // MARK: Usage: Is enabled, show GameCenter and report scores and achievements
+    @Published private(set) var enabled: Bool = false
+    
+    /// Show GameCemter or login to GC
+    public func show() {
+        guard enabled else {return}
+        
+        if GKLocalPlayer.local.isAuthenticated {
+            let gc = GKGameCenterViewController()
+            gc.gameCenterDelegate = gcControllerDelegate
+            window?.rootViewController?.present(gc, animated: true, completion:nil)
+        } else if let uiController = uiController {
+            window?.rootViewController?.present(uiController, animated: true, completion:nil)
+        }
+    }
+    
+    /// Report all current scores and achievements to GC
+    public func report() {
+        guard GKLocalPlayer.local.isAuthenticated else {return}
+        
+        GKScore.report(scores.map({
+            (key: String, value: Score) -> GKScore in
+            value.getGameCenterReporter(id: key)
+        })) {
+            (error) in
+            guard check(error: error) else {return}
+        }
+        
+        GKAchievement.report(achievements.map({
+            (key: String, value: Achievement) -> GKAchievement in
+            value.getGameCenterReporter(id: key)
+        })) {
+            (error) in
+            guard check(error: error) else {return}
+        }
+    }
+
+    // MARK: Internals
+    private var uiController: UIViewController? = nil
+    private let gcControllerDelegate = GCControllerDelegate()
+    private let window: UIWindow?
+
+    private init(window: UIWindow?) {
+        self.window = window
+        GKLocalPlayer.local.authenticateHandler = {
+            (viewController, error) in
+            
+            if let viewController = viewController {
+                self.uiController = viewController
+            }
+            
+            // User authenticated
+            if GKLocalPlayer.local.isAuthenticated {self.report()}
+            self.enabled = (window != nil) && (self.uiController != nil || GKLocalPlayer.local.isAuthenticated)
+        }
+    }
+    
+    private class GCControllerDelegate: NSObject, GKGameCenterControllerDelegate {
+        func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+            
+            gameCenterViewController.dismiss(animated: true, completion: nil)
         }
     }
 }
