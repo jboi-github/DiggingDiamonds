@@ -10,14 +10,15 @@ import SwiftUI
 import Foundation
 
 struct GameZone: View {
-    @ObservedObject var someScore: Score
-    @ObservedObject var someAchievement: Achievement
-    @ObservedObject var someNonConsumable: NonConsumable
-    @ObservedObject var someConsumable: Consumable
+    @ObservedObject var someScore: GFScore
+    @ObservedObject var someAchievement: GFAchievement
+    @ObservedObject var someNonConsumable: GFNonConsumable
+    @ObservedObject var someConsumable: GFConsumable
+    var offeredConsumables: Binding<[GFConsumable]>
 
     struct ScoreView: View {
         var id: String
-        @ObservedObject var score: Score
+        @ObservedObject var score: GFScore
 
         var body: some View {
             VStack {
@@ -42,7 +43,7 @@ struct GameZone: View {
     
     struct AchievementView: View {
         var id: String
-        @ObservedObject var achievement: Achievement
+        @ObservedObject var achievement: GFAchievement
 
         var body: some View {
             VStack {
@@ -67,7 +68,7 @@ struct GameZone: View {
     
     struct NonConsumableView: View {
         var id: String
-        @ObservedObject var nonConsumable: NonConsumable
+        @ObservedObject var nonConsumable: GFNonConsumable
 
         var body: some View {
             VStack {
@@ -92,7 +93,7 @@ struct GameZone: View {
     
     struct ConsumableView: View {
         var id: String
-        @ObservedObject var consumable: Consumable
+        @ObservedObject var consumable: GFConsumable
 
         var body: some View {
             VStack {
@@ -131,24 +132,35 @@ struct GameZone: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("GameZone").font(.largeTitle).padding()
+            Text("GameZone").font(.largeTitle)
             Divider()
             ScoreView(id: "Some Score:", score: self.someScore)
             AchievementView(id: "Gold Medal(s):", achievement: self.someAchievement)
             NonConsumableView(id: "to be or not to be:", nonConsumable: self.someNonConsumable)
             ConsumableView(id: "Collect it:", consumable: self.someConsumable)
             Divider()
-            Button(action: {
-                self.inLevel.toggle()
-                if self.inLevel {
-                    GTDataProvider.sharedInstance!.enterLevel()
-                } else {
-                    GTDataProvider.sharedInstance!.leaveLevel()
+            HStack {
+                Button(action: {
+                    self.inLevel.toggle()
+                    if self.inLevel {
+                        GameFrame.instance.enterLevel()
+                    } else {
+                        GameFrame.instance.leaveLevel(requestReview: true, showInterstitial: true)
+                    }
+                }) {
+                    Text(inLevel ? "Leave Level" : "Enter Level")
+                        .foregroundColor(.accentColor)
+                        .padding()
                 }
-            }) {
-                Text(inLevel ? "Leave Level" : "Enter Level").foregroundColor(.accentColor).padding()
+                .border(Color.accentColor)
+                Button(action: {
+                    self.offeredConsumables.wrappedValue = GameFrame.inApp.getConsumables(ids: ["CollectIt"])
+                }) {
+                    Text("Good Run").foregroundColor(.accentColor).padding()
+                }
+                .disabled(self.someConsumable.available >= 7)
+                .border(Color.accentColor)
             }
-            .border(Color.accentColor)
             Spacer()
         }
         .padding()
@@ -158,13 +170,19 @@ struct GameZone: View {
 }
 
 struct GameZone_Previews: PreviewProvider {
+    @State static var offeredConsumables = [GFConsumable]()
+    
     static var previews: some View {
-        GTDataProvider.createSharedInstanceForPreview(containerName: "DiggingDiamonds")
+        GameFrame.createSharedInstanceForPreview(
+            consumablesConfig: ["CollectIt" : ("CollectIt", 7)],
+            adUnitIdBanner: "ca-app-pub-3940256099942544/2934735716",
+            adUnitIdRewarded: "ca-app-pub-3940256099942544/1712485313",
+            adUnitIdInterstitial: "ca-app-pub-3940256099942544/4411468910")
         return GameZone(
-            someScore: GTDataProvider.sharedInstance!.getScore("Some Score"),
-            someAchievement: GTDataProvider.sharedInstance!.getAchievement("Gold Medal"),
-            someNonConsumable: GTDataProvider.sharedInstance!.getNonConsumable("to be or not to be"),
-            someConsumable: GTDataProvider.sharedInstance!.getConsumable("Collect it")
-        )
+            someScore: GameFrame.coreData.getScore("Some Score"),
+            someAchievement: GameFrame.coreData.getAchievement("Gold Medal"),
+            someNonConsumable: GameFrame.coreData.getNonConsumable("to be or not to be"),
+            someConsumable: GameFrame.coreData.getConsumable("CollectIt"),
+            offeredConsumables: $offeredConsumables)
     }
 }

@@ -17,13 +17,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // TODO: Explain this. (have fun!)
-        GTDataProvider.createSharedInstance(scene, containerName: "DiggingDiamonds") {
-            MainView(
-                someScore: GTDataProvider.sharedInstance!.getScore("Some Score"),
-                someAchievement: GTDataProvider.sharedInstance!.getAchievement("Gold Medal"),
-                someNonConsumable: GTDataProvider.sharedInstance!.getNonConsumable("to be or not to be"),
-                someConsumable: GTDataProvider.sharedInstance!.getConsumable("Collect it")
-            )
+        GameFrame.createSharedInstance(
+            scene,
+            consumablesConfig: ["CollectIt" : ("CollectIt", 7)],
+            adUnitIdBanner: "ca-app-pub-3940256099942544/2934735716",
+            adUnitIdRewarded: "ca-app-pub-3940256099942544/1712485313",
+            adUnitIdInterstitial: "ca-app-pub-3940256099942544/4411468910") {
+                MainView(
+                    someScore: GameFrame.coreData.getScore("Some Score"),
+                    someAchievement: GameFrame.coreData.getAchievement("Gold Medal"),
+                    someNonConsumable: GameFrame.coreData.getNonConsumable("to be or not to be"),
+                    someConsumable: GameFrame.coreData.getConsumable("CollectIt"))
         }
     }
 
@@ -55,7 +59,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        GTDataProvider.sharedInstance!.save() // TODO: Mentioned in Readme
     }
 }
 

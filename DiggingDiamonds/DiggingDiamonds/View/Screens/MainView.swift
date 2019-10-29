@@ -10,20 +10,23 @@ import SwiftUI
 import StoreKit
 
 struct MainView: View {
-    @ObservedObject var someScore: Score
-    @ObservedObject var someAchievement: Achievement
-    @ObservedObject var someNonConsumable: NonConsumable
-    @ObservedObject var someConsumable: Consumable
+    @ObservedObject var someScore: GFScore
+    @ObservedObject var someAchievement: GFAchievement
+    @ObservedObject var someNonConsumable: GFNonConsumable
+    @ObservedObject var someConsumable: GFConsumable
+    @ObservedObject var gtAdMob = GameFrame.adMob
 
     private struct NavigationArea: View {
-        @ObservedObject var gtGameCenter = GTGameCenter.sharedInstance!
+        @ObservedObject var someConsumable: GFConsumable
+        @ObservedObject var gtGameCenter = GameFrame.gameCenter
+        @ObservedObject var gtAdMob = GameFrame.adMob
 
         var body: some View {
             VStack {
                 Divider()
                 HStack {
                     ImageNavigationLink(systemName: "cart", destination: InAppStoreView())
-                    ImageNavigationLink(systemName: "gear", destination: SettingsView())
+                    ImageButton(systemName: "gear", action: getUrlAction(UIApplication.openSettingsURLString))
                     ImageButton(systemName: "rosette") {
                         self.gtGameCenter.show()
                     }
@@ -32,13 +35,11 @@ struct MainView: View {
                 }
                 Divider()
                 HStack {
-                    ImageNavigationLink(systemName: "cart.badge.plus", destination: InAppOfferView())
-                    ImageButton(systemName: "hand.thumbsup") {
-                        SKStoreReviewController.requestReview()
-                    }
+                    ImageButton(systemName: "hand.thumbsup", action: getUrlAction("https://itunes.apple.com/app/idXXXXXXXXXX?action=write-review"))
                     ImageButton(systemName: "film") {
-                        print("Button 3")
+                        self.gtAdMob.showReward(consumable: self.someConsumable, quantity: 14)
                     }
+                    .disabled(!self.gtAdMob.rewardAvailable)
                     ImageButton(systemName: "recordingtape") {
                         print("Button 4")
                     }
@@ -49,76 +50,63 @@ struct MainView: View {
     }
     
     private struct InformationArea: View {
-        @ObservedObject var someScore: Score
-        @ObservedObject var someAchievement: Achievement
-        @ObservedObject var someNonConsumable: NonConsumable
-        @ObservedObject var someConsumable: Consumable
+        @ObservedObject var someScore: GFScore
+        @ObservedObject var someAchievement: GFAchievement
+        @ObservedObject var someNonConsumable: GFNonConsumable
+        @ObservedObject var someConsumable: GFConsumable
 
         var body: some View {
             VStack {
                 Divider()
                 HStack {
-                    Text("Some Score: ").font(.headline)
+                    Text("Some Score: ").font(.caption)
+                    Text("\(someScore.current) / \(someScore.highest)").bold()
                     Spacer()
-                    Text("Current: ").font(.caption)
-                    Text("\(someScore.current)").bold()
-                    Spacer()
-                    Text("Highest: ").font(.caption)
-                    Text("\(someScore.highest)").bold()
+                    Text("Gold Medal: ").font(.caption)
+                    Text("\(someAchievement.current.format(".1")) / \(someAchievement.highest.format(".1")) /  \(someAchievement.timesAchieved)").bold()
                 }
                 HStack {
-                    Text("Gold Medal: ").font(.headline)
+                    Text("to be or not to be: ").font(.caption)
+                    Text("\(someNonConsumable.isOpened ? "open":"closed")").bold()
                     Spacer()
-                    Text("Current: ").font(.caption)
-                    Text("\(someAchievement.current.format(".1"))").bold()
-                    Spacer()
-                    Text("Highest: ").font(.caption)
-                    Text("\(someAchievement.highest.format(".1"))").bold()
-                    Spacer()
-                    Text("times achieved: ").font(.caption)
-                    Text("\(someAchievement.timesAchieved)").bold()
-                }
-                HStack {
-                    Text("to be or not to be: ").font(.headline)
-                    Spacer()
-                    Text("isOpen: ").font(.caption)
-                    Text("\(someNonConsumable.isOpened ? "YES":"NO")").bold()
-                }
-                HStack {
-                    Text("Collect it: ").font(.headline)
-                    Spacer()
-                    Text("avaliable: ").font(.caption)
+                    Text("Collect it: ").font(.caption)
                     Text("\(someConsumable.available)").bold()
                 }
                 Divider()
             }.padding()
         }
     }
-
+    
+    @State var offeredConsumables = [GFConsumable]()
+    
     var body: some View {
-        return VStack {
-            NavigationView {
-                ZStack {
-                    GameZone(
+        VStack {
+            ZStack {
+                GameZone(
+                    someScore: someScore,
+                    someAchievement: someAchievement,
+                    someNonConsumable: someNonConsumable,
+                    someConsumable: someConsumable,
+                    offeredConsumables: $offeredConsumables)
+                VStack {
+                    NavigationArea(someConsumable: someConsumable)
+                    Spacer()
+                    InformationArea(
                         someScore: someScore,
                         someAchievement: someAchievement,
                         someNonConsumable: someNonConsumable,
                         someConsumable: someConsumable)
-                    VStack {
-                        NavigationArea()
-                        Spacer()
-                        InformationArea(
-                            someScore: someScore,
-                            someAchievement: someAchievement,
-                            someNonConsumable: someNonConsumable,
-                            someConsumable: someConsumable)
-                    }
                 }
-                .navigationBarTitle(Text("Main Screen"), displayMode: .inline)
             }
-            Text("Banner")
-                .frame(width: 240, height: 50, alignment: .center)
-                .background(Color.blue)
+            .blur(radius: offeredConsumables.isEmpty ? 0.0 : 5.0)
+            .overlay(InAppOfferView(offeredConsumables: $offeredConsumables))
+            ZStack {
+                GFBannerView()
+                Text("Thank you for playing The Game")
+                    .opacity(gtAdMob.bannerAvailable ? 0.0 : 1.0)
+            }
+            .frame(width: gtAdMob.bannerWidth, height: gtAdMob.bannerHeight)
+            .background(Color.blue)
         }
         .statusBar(hidden: true)
     }
@@ -126,12 +114,15 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        GTDataProvider.createSharedInstanceForPreview(containerName: "DiggingDiamonds")
+        GameFrame.createSharedInstanceForPreview(
+            consumablesConfig: ["CollectIt" : ("CollectIt", 7)],
+            adUnitIdBanner: "ca-app-pub-3940256099942544/2934735716",
+            adUnitIdRewarded: "ca-app-pub-3940256099942544/1712485313",
+            adUnitIdInterstitial: "ca-app-pub-3940256099942544/4411468910")
         return MainView(
-            someScore: GTDataProvider.sharedInstance!.getScore("Some Score"),
-            someAchievement: GTDataProvider.sharedInstance!.getAchievement("Gold Medal"),
-            someNonConsumable: GTDataProvider.sharedInstance!.getNonConsumable("to be or not to be"),
-            someConsumable: GTDataProvider.sharedInstance!.getConsumable("Collect it")
-        )
+            someScore: GameFrame.coreData.getScore("Some Score"),
+            someAchievement: GameFrame.coreData.getAchievement("Gold Medal"),
+            someNonConsumable: GameFrame.coreData.getNonConsumable("to be or not to be"),
+            someConsumable: GameFrame.coreData.getConsumable("CollectIt"))
     }
 }

@@ -10,8 +10,8 @@ import Foundation
 import CoreData
 import GameKit
 
-class Achievement: ObservableObject {
-    internal var delegate: GTAchievement {
+public class GFAchievement: ObservableObject {
+    internal var delegate: GFEntityAchievement {
            didSet(prev) {
                guard prev != delegate else {return}
                if let context = delegate.managedObjectContext {
@@ -31,7 +31,7 @@ class Achievement: ObservableObject {
     @Published private(set) var timesAchieved: Int
     
     // init from load
-    internal init(delegate: GTAchievement) {
+    internal init(delegate: GFEntityAchievement) {
         self.delegate = delegate
         self.current = delegate.current
         self.highest = delegate.highest
@@ -40,7 +40,7 @@ class Achievement: ObservableObject {
     
     // init from new instance
     internal convenience init(_ id: String, context: NSManagedObjectContext) {
-        self.init(delegate: NSEntityDescription.insertNewObject(forEntityName: "Achievement", into: context) as! GTAchievement)
+        self.init(delegate: NSEntityDescription.insertNewObject(forEntityName: "GFAchievement", into: context) as! GFEntityAchievement)
         delegate.id = id
     }
     
@@ -50,9 +50,6 @@ class Achievement: ObservableObject {
         if current > highest {highest = current}
         timesAchieved = Int(current) // Round down
     }
-    
-    /// Restart score at 0, e.g. when new level or new game starts
-    public func startOver() {current = 0}
     
     internal func prepareForSave() {
         delegate.current = current
@@ -65,7 +62,7 @@ class Achievement: ObservableObject {
         return gkAchievement
     }
 
-    internal func merge(prev: GTAchievement) {
+    internal func merge(prev: GFEntityAchievement) {
         current = Double(delegate.current)
         highest = Double(max(delegate.highest, prev.highest))
     }

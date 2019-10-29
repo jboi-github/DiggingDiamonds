@@ -10,8 +10,8 @@ import Foundation
 import CoreData
 import GameKit
 
-internal class Score: ObservableObject {
-    internal var delegate: GTScore {
+public class GFScore: ObservableObject {
+    internal var delegate: GFEntityScore {
         didSet(prev) {
             guard prev != delegate else {return}
             if let context = delegate.managedObjectContext {
@@ -27,7 +27,7 @@ internal class Score: ObservableObject {
     /// Personal high score
     @Published private(set) var highest: Int
     
-    internal init(delegate: GTScore) {
+    internal init(delegate: GFEntityScore) {
         self.delegate = delegate
         self.current = Int(delegate.current)
         self.highest = Int(delegate.highest)
@@ -35,7 +35,7 @@ internal class Score: ObservableObject {
     
     // init from new instance
     internal convenience init(_ id: String, context: NSManagedObjectContext) {
-        self.init(delegate: NSEntityDescription.insertNewObject(forEntityName: "Score", into: context) as! GTScore)
+        self.init(delegate: NSEntityDescription.insertNewObject(forEntityName: "GFScore", into: context) as! GFEntityScore)
         delegate.id = id
     }
 
@@ -59,7 +59,7 @@ internal class Score: ObservableObject {
         return gkScore
     }
 
-    internal func merge(prev: GTScore) {
+    internal func merge(prev: GFEntityScore) {
         current = Int(delegate.current)
         highest = Int(max(delegate.highest, prev.highest))
     }
